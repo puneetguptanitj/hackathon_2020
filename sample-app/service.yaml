@@ -1,0 +1,18 @@
+apiVersion: serving.knative.dev/v1alpha1
+kind: Service
+metadata:
+  name: knative-example
+  namespace: default
+spec:
+  runLatest:
+    configuration:
+      revisionTemplate:
+        metadata:
+          annotations:
+            autoscaling.knative.dev/metric: concurrency
+            autoscaling.knative.dev/target: "1" 
+            autoscaling.knative.dev/minScale: "2"
+            autoscaling.knative.dev/maxScale: "10"
+        spec:
+          container:
+            image: docker.io/puneetguptanitj/sample-app-autoscale
